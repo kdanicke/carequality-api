@@ -58,59 +58,62 @@ The API ingests the CSV and normalizes key hospital attributes including:
 ---
 
 ## Project Structure
-carequality-api/
-│
-├── app/
-│ ├── main.py
-│ ├── db.py
-│ ├── models.py
-│ ├── schemas.py
-│ ├── repository.py
-│ └── api/
-│ └── routes/
-│ ├── hospitals.py
-│ └── meta.py
-│
-├── scripts/
-│ └── load_hospitals_csv.py
-│
-├── tests/
-│ └── test_hospitals.py
-│
-├── requirements.txt
-└── README.md
 
+- `carequality-api/`
+  - `app/`
+    - `main.py`
+    - `db.py`
+    - `models.py`
+    - `schemas.py`
+    - `repository.py`
+    - `api/`
+      - `routes/`
+        - `hospitals.py`
+        - `meta.py`
+  - `scripts/`
+    - `load_hospitals_csv.py`
+  - `tests/`
+    - `test_hospitals.py`
+  - `requirements.txt`
+  - `README.md`
 
 ---
 
 ## Setup (Windows Example)
 
-Create and activate a virtual environment:
+1. Create and activate a virtual environment:
 
 ```bash
 python -m venv .venv
 .venv\Scripts\Activate.ps1
+```
 
-## Install Dependencies
+2. Install Dependencies
 
+```bash
 pip install -r requirements.txt
+```
 
-## Download the CMS Hospital General Information CSV from data.cms.gov. For this example, we used Hospital General Information
+3. Download the CMS Hospital General Information CSV from data.cms.gov. For this example, we used Hospital General Information
 https://data.cms.gov/provider-data/dataset/xubh-q36u#data-table
 
-Place it inside:
-data/Hospital_General_Information.csv
+4. Place it inside:
+>data/Hospital_General_Information.csv
 
-Load into SQLite:
+5. Load into SQLite:
+```bash
 python scripts/load_hospitals_csv.py data/Hospital_General_Information.csv
+```
 
 This will generate:
 carequality.db
 
-## Run the API
+6. Start the app
+```bash
 uvicorn app.main:app --reload
+```
 
-Open in your browser:
+7. Open in your browser:
 
 Swagger UI:
 http://127.0.0.1:8000/docs
@@ -118,24 +121,30 @@ http://127.0.0.1:8000/docs
 OpenAPI JSON:
 http://127.0.0.1:8000/openapi.json
 
-## Example API Calls
-Search for Mayo Clinic hospitals in Minnesota
-GET /hospitals?q=mayo&state=MN
-List hospitals in Arizona
-GET /hospitals?state=AZ&limit=10
-Filter by birthing friendly hospitals
-GET /hospitals?state=AL&birthing_friendly=true
-Discover available states
-GET /meta/states
-Discover counties in Minnesota
-GET /meta/counties?state=MN
-Get rating statistics for a state
-GET /stats/ratings?state=AZ
+#### Example API Calls
 
-## Running Tests
+Search for Mayo Clinic hospitals in Minnesota
+> GET /hospitals?q=mayo&state=MN
+
+List hospitals in Arizona
+> GET /hospitals?state=AZ&limit=10
+
+Filter by birthing friendly hospitals
+> GET /hospitals?state=AL&birthing_friendly=true
+
+Discover available states
+> GET /meta/states
+
+Discover counties in Minnesota
+> GET /meta/counties?state=MN
+
+Get rating statistics for a state
+> GET /stats/ratings?state=AZ
+
+#### Running Tests
 pytest
 
 Tests validate:
-Health endpoint
-List endpoint response structure
-Stats endpoint response structure
+- Health endpoint
+- List endpoint response structure
+- Stats endpoint response structure

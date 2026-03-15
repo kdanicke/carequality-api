@@ -23,7 +23,7 @@ def list_hospitals(
     ownership: str | None = None,
     hospital_type: str | None = None,
     emergency_services: bool | None = None,
-    birthing_friendly: bool | None = None,
+    birthing_friendly: str | None = None,
     min_rating: int | None = None,
     sort: str = "name",
     order: str = "asc",
@@ -53,8 +53,10 @@ def list_hospitals(
         filters.append(Hospital.hospital_type.ilike(hospital_type))
     if emergency_services is not None:
         filters.append(Hospital.emergency_services == emergency_services)
-    if birthing_friendly is not None:
-        filters.append(Hospital.birthing_friendly == birthing_friendly)
+    if birthing_friendly == "yes":
+        filters.append(Hospital.birthing_friendly.is_(True))
+    elif birthing_friendly == "unknown":
+        filters.append(Hospital.birthing_friendly.is_(None))
     if min_rating is not None:
         filters.append(Hospital.overall_rating.is_not(None))
         filters.append(Hospital.overall_rating >= min_rating)

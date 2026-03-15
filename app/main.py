@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
 from .api.routes.meta import router as meta_router
+from fastapi.middleware.cors import CORSMiddleware
 
 from .db import engine, Base
 from .api.routes.hospitals import router as hospitals_router, stats_router
@@ -13,6 +14,17 @@ app = FastAPI(
     title="CareQuality API",
     version="0.1.0",
     description="Dataset-backed API for browsing CMS hospital/provider quality information (non-sensitive).",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.exception_handler(HTTPException)

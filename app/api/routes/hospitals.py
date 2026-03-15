@@ -7,7 +7,6 @@ from ...schemas import HospitalOut, ListResponse, ErrorResponse, RatingStatsOut
 
 router = APIRouter(prefix="/hospitals", tags=["hospitals"])
 
-
 @router.get("", response_model=ListResponse[HospitalOut])
 def list_hospitals(
     limit: int = Query(50, ge=1, le=200),
@@ -19,7 +18,7 @@ def list_hospitals(
     ownership: str | None = None,
     hospital_type: str | None = None,
     emergency_services: bool | None = None,
-    birthing_friendly: bool | None = None,
+    birthing_friendly: str | None = Query(None, pattern="^(yes|unknown)$"),
     min_rating: int | None = Query(None, ge=1, le=5),
     sort: str = Query("name", pattern="^(name|state|city|overall_rating)$"),
     order: str = Query("asc", pattern="^(asc|desc)$"),

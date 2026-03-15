@@ -130,7 +130,7 @@ List hospitals in Arizona
 > GET /hospitals?state=AZ&limit=10
 
 Filter by birthing friendly hospitals
-> GET /hospitals?state=AL&birthing_friendly=true
+> GET /hospitals?state=AL&birthing_friendly=yes
 
 Discover available states
 > GET /meta/states
